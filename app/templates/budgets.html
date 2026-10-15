@@ -1,0 +1,100 @@
+
+{% extends "base.html" %}
+
+{% block title %}Budgets | Money Tracker{% endblock %}
+
+{% block content %}
+<section class="welcome">
+    <p class="eyebrow">PLAN YOUR SPENDING</p>
+    <h1>Monthly Budgets</h1>
+    <p>Set spending limits and track expenses by category.</p>
+</section>
+
+<section class="card">
+    <h2>Create or Update a Budget</h2>
+
+    <form method="post" action="{{ url_for('main.budgets') }}" class="form-grid">
+        <div class="field">
+            <label for="category">Expense Category</label>
+            <input id="category" name="category" type="text"
+                   maxlength="50" required placeholder="e.g. Food">
+        </div>
+
+        <div class="field">
+            <label for="monthly_limit">Monthly Limit (R)</label>
+            <input id="monthly_limit" name="monthly_limit"
+                   type="number" min="0.01" step="0.01"
+                   required placeholder="e.g. 2000">
+        </div>
+
+        <div class="field">
+            <label for="month">Budget Month</label>
+            <input id="month" name="month" type="month"
+                   value="{{ month }}" required>
+        </div>
+
+        <div class="field form-action">
+            <button class="button" type="submit">Save Budget</button>
+        </div>
+    </form>
+
+    <p class="muted">
+        Saving the same category for the same month updates its limit.
+    </p>
+</section>
+
+<section class="card">
+    <h2>Budgets for {{ month }}</h2>
+
+    <form method="get" action="{{ url_for('main.budgets') }}"
+          class="month-filter">
+        <label for="filter-month">View another month</label>
+        <input id="filter-month" name="month" type="month"
+               value="{{ month }}" required>
+        <button class="button secondary" type="submit">View</button>
+    </form>
+
+    {% if budgets %}
+        {% for budget in budgets %}
+            {% set limit = budget["monthly_limit"] %}
+            {% set spent = budget["spent"] %}
+            {% set percent = (spent / limit * 100) if limit > 0 else 0 %}
+            {% set bar_width = [percent, 100] | min %}
+
+            <article class="budget-item">
+                <div class="section-heading">
+                    <h3>{{ budget["category"] }}</h3>
+                    <strong>
+                        R {{ "%.2f" | format(spent) }}
+                        / R {{ "%.2f" | format(limit) }}
+                    </strong>
+                </div>
+
+                <div class="progress-track">
+    <progress
+            class="progress-fill"
+            value="{{ bar_width }}"
+            max="100"
+            aria-label="{{ budget['category'] }} budget usage">
+        </progress>
+</div>
+
+                {% if percent >= 100 %}
+                    <p class="budget-warning">
+                        Budget reached or exceeded.
+                    </p>
+                {% else %}
+                    <p class="muted">
+                        R {{ "%.2f" | format(limit - spent) }} remaining
+                        · {{ "%.0f" | format(percent) }}% used
+                    </p>
+                {% endif %}
+            </article>
+        {% endfor %}
+    {% else %}
+        <p class="empty-state">
+            No budgets for this month yet. Add one above to get started.
+        </p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+
+{% block title %}Transactions | Money Tracker{% endblock %}
+
+{% block content %}
+<section class="welcome">
+    <p class="eyebrow">INCOME AND SPENDING</p>
+    <h1>Transactions</h1>
+    <p>Record your money coming in and going out.</p>
+</section>
+
+<section class="card">
+    <h2>Add Transaction</h2>
+
+    <form action="{{ url_for('main.add_transaction_route') }}"
+          method="post" class="form-grid">
+        <div class="field">
+            <label for="transaction_type">Transaction Type</label>
+            <select id="transaction_type" name="transaction_type" required>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="description">Description</label>
+            <input id="description" name="description"
+                   maxlength="100" required
+                   placeholder="e.g. Monthly salary">
+        </div>
+
+        <div class="field">
+            <label for="category">Category</label>
+            <input id="category" name="category"
+                   maxlength="50" required
+                   placeholder="e.g. Work, Food, Transport">
+        </div>
+
+        <div class="field">
+            <label for="amount">Amount (R)</label>
+            <input id="amount" name="amount" type="number"
+                   min="0.01" step="0.01" required
+                   placeholder="0.00">
+        </div>
+
+        <div class="field">
+            <label for="transaction_date">Date</label>
+            <input id="transaction_date" name="transaction_date"
+                   type="date" value="{{ today }}" required>
+        </div>
+
+        <div class="field form-action">
+            <button class="button" type="submit">Save Transaction</button>
+        </div>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Transaction History</h2>
+
+    {% if transactions %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th class="number">Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction["description"] }}</td>
+                        <td>{{ transaction["category"] }}</td>
+                        <td>{{ transaction["transaction_type"]|title }}</td>
+                        <td>{{ transaction["transaction_date"] }}</td>
+                        <td class="number">
+                            R {{ "%.2f"|format(transaction["amount"]) }}
+                        </td>
+                        <td>
+                            <form
+                                action="{{ url_for('main.delete_transaction_route', transaction_id=transaction['id']) }}"
+                                method="post"
+                                onsubmit="return confirm('Delete this transaction?');">
+                                <button class="button danger" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty-state">No transactions recorded yet.</p>
+    {% endif %}
+</section>
+{% endblock %}
