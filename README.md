@@ -1,26 +1,36 @@
 Personal Finance Tracker
 
-A simple web application for keeping track of personal finances. Built with Python, Flask, and SQLite, it lets users record income and expenses, check their current balance, and set monthly budgets for different spending categories.
+A personal finance web application built with Python, Flask, and SQLite. The application allows users to record income and expenses, view their financial balance, and manage monthly budgets by category.
 
-I built this project to practise backend development, working with databases, handling user input, and writing automated tests.
+This project was built to practise web development, database management, input validation, and automated testing.
 
+Table of Contents
 Features
-Dashboard: See total income, total expenses, and your current balance.
-Transactions: Add income and expense records and view existing transactions.
-Delete transactions: Remove transactions you no longer need.
-Input validation: Check transaction details such as descriptions, categories, amounts, dates, and types.
-Monthly budgets: Set spending limits for different categories each month.
-Budget tracking: See how your spending compares with your budget.
-SQLite database: Keep transaction and budget data saved between sessions.
-Automated tests: Use pytest to check that the main features work as expected.
-Built With
-Python
-Flask
-SQLite
-HTML and CSS
-Jinja templates
-pytest
-Git and GitHub
+Technologies Used
+Project Structure
+Installation and Setup
+Running the Application
+Running Tests
+Future Improvements
+Author
+Features
+Dashboard: Displays total income, total expenses, and current balance.
+Transaction Management: Add and view income and expense transactions.
+Transaction Deletion: Remove existing transactions.
+Input Validation: Validates transaction descriptions, categories, amounts, dates, and types.
+Monthly Budgets: Set spending limits for different categories.
+Budget Tracking: Compare actual spending against monthly budgets.
+Data Persistence: Store transactions and budgets in an SQLite database.
+Automated Testing: Test application functionality using pytest.
+Technologies Used
+Technology	Purpose
+Python	Application logic
+Flask	Web framework
+SQLite	Database
+HTML and CSS	Frontend and styling
+Jinja	HTML templating
+pytest	Automated testing
+Git and GitHub	Version control
 Project Structure
 personal-finance-tracker/
 ├── app/
@@ -46,75 +56,21 @@ personal-finance-tracker/
 └── README.md
 
 
-The SQLite database is created locally when the application runs, so the database file doesn't need to be committed to GitHub.
+The SQLite database is stored locally and generated when the application runs. The database file should not be committed to version control.
 
-Getting Started
-Requirements
+Installation and Setup
+Prerequisites
 
-You'll need Python 3.10 or newer and Git installed on your machine.
+Make sure the following are installed:
 
+Python 3.10 or newer
+Git
 1. Clone the repository
 git clone https://github.com/shaunemakhubele/personal-finance-tracker.git
 cd personal-finance-tracker
 
 2. Create a virtual environment
 
-Using a virtual environment keeps the project's dependencies separate from other Python projects.
+A virtual environment keeps the project's Python dependencies separate from other projects.
 
-Windows PowerShell:
-
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-
-If PowerShell prevents activation, you can still run Python directly from the virtual environment.
-
-3. Install the dependencies
-python -m pip install -r requirements.txt
-
-4. Run the application
-python run.py
-
-
-Once the server starts, open your browser and go to:
-
-http://127.0.0.1:5000
-
-Running the Tests
-
-To run the test suite, use:
-
-python -m pytest -q
-
-
-The tests cover things like loading pages, adding and deleting transactions, calculating balances, handling invalid amounts, and saving budgets.
-
-What I Learned
-
-Working on this project gave me practical experience with:
-
-Building a web application with Flask.
-Organising application code into separate modules.
-Using SQLite to store and retrieve data.
-Handling form submissions and validating user input.
-Implementing database operations for transactions and budgets.
-Writing tests with pytest.
-Using Git and GitHub to manage a project.
-What's Next?
-
-There are a few things I'd like to add as the project develops:
-
-User accounts and secure login.
-Charts to make spending patterns easier to understand.
-CSV export for transactions.
-More detailed financial reports.
-Additional security improvements before deployment.
-Project Status
-
-The application is a work in progress. The main features, including transaction management, balance calculations, monthly budgets, and automated tests, are in place. There's still room to improve the functionality and overall user experience.
-
-Author
-
-Shaune Makhubele
-
-GitHub: shaunemakhubele
+Windows (PowerShell):
